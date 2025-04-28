@@ -1,0 +1,19 @@
+<!-- filepath: /home/ovi/programming/django/library/lms/templates/students/student_form.html -->
+{% extends 'base.html' %}
+
+{% block title %}{% if student %}Edit Student{% else %}Add Student{% endif %}{% endblock %}
+
+{% block content %}
+<h2>{% if student %}Edit Student{% else %}Add Student{% endif %}</h2>
+<form method="post">
+    {% csrf_token %}
+    <label for="name">Name:</label>
+    <input type="text" id="name" name="name" value="{{ student.name|default:'' }}"><br>
+    <label for="age">Age:</label>
+    <input type="number" id="age" name="age" value="{{ student.age|default:'' }}"><br>
+    <label for="email">Email:</label>
+    <input type="email" id="email" name="email" value="{{ student.email|default:'' }}"><br>
+    <button type="submit">Save</button>
+</form>
+<a href="{% url 'students:student_list' %}">Cancel</a>
+{% endblock %}

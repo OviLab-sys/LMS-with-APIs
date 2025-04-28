@@ -1,0 +1,10 @@
+<!-- filepath: /home/ovi/programming/django/library/lms/templates/borrowing/borrow_error.html -->
+{% extends 'base.html' %}
+
+{% block title %}Borrow Error{% endblock %}
+
+{% block content %}
+<h2>Error</h2>
+<p>{{ message }}</p>
+<a href="{% url 'borrow:borrow_list' %}">Back to Borrow List</a>
+{% endblock %}

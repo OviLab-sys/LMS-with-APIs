@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Student List{% endblock %}
+
+{% block content %}
+<h2>Student List</h2>
+<ul>
+    {% for student in students %}
+        <li>
+            <a href="{% url 'students:student_detail' student.id %}">{{ student.name }}</a> ({{ student.email }})
+            <a href="{% url 'students:student_update' student.id %}">Edit</a>
+            <form action="{% url 'students:student_delete' student.id %}" method="post" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">Delete</button>
+            </form>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'students:student_create' %}">Add New Student</a>
+{% endblock %}

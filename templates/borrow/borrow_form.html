@@ -1,0 +1,14 @@
+<!-- filepath: /home/ovi/programming/django/library/lms/templates/borrowing/borrow_form.html -->
+{% extends 'base.html' %}
+
+{% block title %}Borrow a Book{% endblock %}
+
+{% block content %}
+<h2>Borrow a Book</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Borrow</button>
+</form>
+<a href="{% url 'borrow_list' %}">Cancel</a>
+{% endblock %}

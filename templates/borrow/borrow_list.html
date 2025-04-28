@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block title %}Borrowed Books{% endblock %}
+
+{% block content %}
+<h2>Borrowed Books</h2>
+
+<!-- Search Form -->
+<form method="get" action="{% url 'borrow:borrow_list' %}">
+    <input type="text" name="q" placeholder="Search by book title" value="{{ query|default:'' }}">
+    <button type="submit">Search</button>
+</form>
+
+<ul>
+    {% for borrow in borrows %}
+        <li>
+            {{ borrow.student.name }} borrowed "{{ borrow.book.title }}" on {{ borrow.borrow_date }}
+            {% if not borrow.is_returned %}
+                <a href="{% url 'borrow:return_book' borrow.id %}">Return</a>
+            {% else %}
+                (Returned on {{ borrow.return_date }})
+            {% endif %}
+        </li>
+    {% endfor %}
+</ul>
+{% if not borrows %}
+    <p>No books match your search.</p>
+{% endif %}
+{% endblock %}

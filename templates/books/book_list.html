@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+{% block title %}Book List{% endblock %}
+
+{% block content %}
+<h2>Book List</h2>
+
+<!-- Search Form -->
+<form method="get" action="{% url 'books:book_list' %}">
+    <input type="text" name="q" placeholder="Search by book title" value="{{ query|default:'' }}">
+    <button type="submit">Search</button>
+</form>
+
+<!-- Display Books Grouped by Subjects -->
+{% for subject in subjects %}
+    <div class="subject-section">
+        <h3 class="subject-header" onclick="toggleDropdown('{{ subject.id }}')">
+            {{ subject.name }} ▼
+        </h3>
+        <ul id="subject-{{ subject.id }}" class="subject-books" style="display: none;">
+            {% for book in books %}
+                {% if book.subject.id == subject.id %}
+                    <li>
+                        <strong>{{ book.title }}</strong> by {{ book.author }}
+                        <a href="{% url 'books:book_detail' book.id %}">Details</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
+            {% if not books|length %}
+                <li>No books available under this subject.</li>
+            {% endif %}
+        </ul>
+    </div>
+{% endfor %}
+
+<script>
+    function toggleDropdown(subjectId) {
+        const dropdown = document.getElementById(`subject-${subjectId}`);
+        if (dropdown.style.display === "none") {
+            dropdown.style.display = "block";
+        } else {
+            dropdown.style.display = "none";
+        }
+    }
+</script>
+{% endblock %}

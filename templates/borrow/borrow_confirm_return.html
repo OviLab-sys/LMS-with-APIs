@@ -1,0 +1,14 @@
+<!-- filepath: /home/ovi/programming/django/library/lms/templates/borrowing/borrow_confirm_return.html -->
+{% extends 'base.html' %}
+
+{% block title %}Confirm Return{% endblock %}
+
+{% block content %}
+<h2>Confirm Return</h2>
+<p>Are you sure you want to mark the book "{{ borrow.book.title }}" as returned?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Yes, Return</button>
+</form>
+<a href="{% url 'borrow_list' %}">Cancel</a>
+{% endblock %}
