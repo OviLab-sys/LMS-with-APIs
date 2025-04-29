@@ -8,21 +8,3 @@ class Student(models.Model):
     
     def __str__(self):
         return f"{self.name}: {self.student_id}"
-
-class Borrowing(models.Model):
-    student = models.ForeignKey(Student, on_delete=models.CASCADE)
-    book = models.ForeignKey(Books, on_delete=models.CASCADE)
-    borrow_date = models.DateField(auto_now_add=True)
-    due_date = models.DateField()
-    return_date = models.DateField(null=True, blank=True)
-    
-    class Meta:
-        constraints = [
-            models.UniqueConstraint(
-                fields=['book', 'student', 'return_date'],
-                name='unique_active_borrowing'
-            )
-        ]
-    
-    def __str__(self):
-        return f"{self.student.name} - {self.book.name} - {self.due_date}"

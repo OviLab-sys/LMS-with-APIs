@@ -1,46 +1,33 @@
+<!-- filepath: /home/ovi/programming/django/p3/lms/templates/books/book_list.html -->
 {% extends 'base.html' %}
 
 {% block title %}Book List{% endblock %}
 
 {% block content %}
-<h2>Book List</h2>
+<div class="container mt-4">
+    <h2 class="mb-4">Book List</h2>
 
-<!-- Search Form -->
-<form method="get" action="{% url 'books:book_list' %}">
-    <input type="text" name="q" placeholder="Search by book title" value="{{ query|default:'' }}">
-    <button type="submit">Search</button>
-</form>
+    <!-- Search Form -->
+    <form method="get" action="{% url 'books:book_list' %}" class="d-flex mb-4">
+        <input 
+            type="text" 
+            name="q" 
+            class="form-control me-2" 
+            placeholder="Search by book title" 
+            value="{{ query|default:'' }}">
+        <button type="submit" class="btn btn-success">Search</button>
+    </form>
 
-<!-- Display Books Grouped by Subjects -->
-{% for subject in subjects %}
-    <div class="subject-section">
-        <h3 class="subject-header" onclick="toggleDropdown('{{ subject.id }}')">
-            {{ subject.name }} ▼
-        </h3>
-        <ul id="subject-{{ subject.id }}" class="subject-books" style="display: none;">
-            {% for book in books %}
-                {% if book.subject.id == subject.id %}
-                    <li>
-                        <strong>{{ book.title }}</strong> by {{ book.author }}
-                        <a href="{% url 'books:book_detail' book.id %}">Details</a>
-                    </li>
-                {% endif %}
-            {% endfor %}
-            {% if not books|length %}
-                <li>No books available under this subject.</li>
-            {% endif %}
-        </ul>
-    </div>
-{% endfor %}
-
-<script>
-    function toggleDropdown(subjectId) {
-        const dropdown = document.getElementById(`subject-${subjectId}`);
-        if (dropdown.style.display === "none") {
-            dropdown.style.display = "block";
-        } else {
-            dropdown.style.display = "none";
-        }
-    }
-</script>
+    <!-- Display All Books -->
+    <ul class="list-group">
+        {% for book in books %}
+            <li class="list-group-item">
+                <strong>{{ book.title }}</strong> by {{ book.author }}
+                <a href="{% url 'books:book_detail' book.id %}" class="btn btn-sm btn-primary float-end">Details</a>
+            </li>
+        {% empty %}
+            <li class="list-group-item text-muted">No books available.</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

@@ -29,7 +29,7 @@ def student_create(request):
             email = email
         )
         return redirect('student_detail', pk = student.id)
-    return render(request, 'students/students_form.html')
+    return render(request, 'students/student_form.html')
 
 #Update an existing student
 @csrf_exempt

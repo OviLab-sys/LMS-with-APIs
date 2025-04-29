@@ -1,19 +1,35 @@
-<!-- filepath: /home/ovi/programming/django/library/lms/templates/students/student_form.html -->
+<!-- filepath: /home/ovi/programming/django/p3/lms/templates/students/student_form.html -->
 {% extends 'base.html' %}
 
 {% block title %}{% if student %}Edit Student{% else %}Add Student{% endif %}{% endblock %}
 
 {% block content %}
-<h2>{% if student %}Edit Student{% else %}Add Student{% endif %}</h2>
-<form method="post">
-    {% csrf_token %}
-    <label for="name">Name:</label>
-    <input type="text" id="name" name="name" value="{{ student.name|default:'' }}"><br>
-    <label for="age">Age:</label>
-    <input type="number" id="age" name="age" value="{{ student.age|default:'' }}"><br>
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" value="{{ student.email|default:'' }}"><br>
-    <button type="submit">Save</button>
-</form>
-<a href="{% url 'students:student_list' %}">Cancel</a>
+<div class="container mt-4">
+    <h2 class="mb-4">{% if student %}Edit Student{% else %}Add Student{% endif %}</h2>
+    <form method="post" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="name" class="form-label">Name:</label>
+            <input type="text" id="name" name="name" class="form-control" value="{{ student.name|default:'' }}" required>
+        </div>
+        <br><br>
+
+        <div class="mb-3">
+            <label for="age" class="form-label">Age:</label>
+            <input type="number" id="age" name="age" class="form-control" value="{{ student.age|default:'' }}" required>
+        </div>
+        <br><br>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" value="{{ student.email|default:'' }}" required>
+        </div>
+        <br><br>
+
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'students:student_list' %}" class="btn btn-secondary">Cancel</a>
+            <button type="submit" class="btn btn-success">Save</button>
+        </div>
+    </form>
+</div>
 {% endblock %}

@@ -1,33 +1,48 @@
+<!-- filepath: /home/ovi/programming/django/p3/lms/templates/books/book_form.html -->
 {% extends 'base.html' %}
 
 {% block title %}Add/Edit Book{% endblock %}
 
 {% block content %}
-<h2>{% if book %}Edit{% else %}Add{% endif %} Book</h2>
-<form method="post">
-    {% csrf_token %}
-    <label for="title">Title:</label>
-    <input type="text" id="title" name="title" value="{{ book.title|default:'' }}" required><br><br>
+<div class="container mt-4">
+    <h2 class="mb-4">{% if book %}Edit{% else %}Add{% endif %} Book</h2>
+    <form method="post" class="card p-4 shadow-sm">
+        {% csrf_token %}
+        <div class="mb-3">
+            <label for="title" class="form-label">Title:</label>
+            <input type="text" id="title" name="title" class="form-control" value="{{ book.title|default:'' }}" required>
+        </div>
 
-    <label for="author">Author:</label>
-    <input type="text" id="author" name="author" value="{{ book.author|default:'' }}" required><br><br>
+        <div class="mb-3">
+            <label for="author" class="form-label">Author:</label>
+            <input type="text" id="author" name="author" class="form-control" value="{{ book.author|default:'' }}" required>
+        </div>
 
-    <label for="published_date">Published Date:</label>
-    <input type="date" id="published_date" name="published_date" value="{{ book.published_date|default:'' }}" required><br><br>
+        <div class="mb-3">
+            <label for="published_date" class="form-label">Published Date:</label>
+            <input type="date" id="published_date" name="published_date" class="form-control" value="{{ book.published_date|default:'' }}" required>
+        </div>
 
-    <label for="isbn">ISBN:</label>
-    <input type="text" id="isbn" name="isbn" value="{{ book.isbn|default:'' }}" required><br><br>
+        <div class="mb-3">
+            <label for="isbn" class="form-label">ISBN:</label>
+            <input type="text" id="isbn" name="isbn" class="form-control" value="{{ book.isbn|default:'' }}" required>
+        </div>
 
-    <label for="subject">Subject:</label>
-    <select id="subject" name="subject" required>
-        {% for subject in subjects %}
-            <option value="{{ subject.id }}" {% if book.subject.id == subject.id %}selected{% endif %}>
-                {{ subject.name }}
-            </option>
-        {% endfor %}
-    </select><br><br>
+        <div class="mb-3">
+            <label for="subject" class="form-label">Subject:</label>
+            <select id="subject" name="subject" class="form-select" required>
+                {% for subject in subjects %}
+                    <option value="{{ subject.id }}" {% if book.subject.id == subject.id %}selected{% endif %}>
+                        {{ subject.name }}
+                    </option>
+                {% endfor %}
+            </select>
+        </div>
 
-    <button type="submit">{% if book %}Update{% else %}Add{% endif %} Book</button>
-</form>
-<a href="{% url 'books:book_list' %}">Back to Book List</a>
+        <div class="d-flex justify-content-between">
+            <a href="{% url 'books:book_list' %}" class="btn btn-secondary">Back to Book List</a>
+            <button type="submit" class="btn btn-success">{% if book %}Update{% else %}Add{% endif %} Book</button>
+        </div>
+    </form>
+</div>
 {% endblock %}
